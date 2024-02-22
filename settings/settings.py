@@ -87,8 +87,8 @@ WSGI_APPLICATION = "settings.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME", default="template-api-db"),
-        "USER": env("DB_USER", default="template-api"),
+        "NAME": env("DB_NAME", default="gifts-api-db"),
+        "USER": env("DB_USER", default="gifts-api"),
         "PASSWORD": env("DB_PASSWORD", default="badaras"),
         "HOST": env("DB_HOST", default="localhost"),
         "PORT": env("DB_PORT", default=5432),
