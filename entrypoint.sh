@@ -11,7 +11,7 @@ python manage.py migrate
 
 # Start Gunicorn or any other web server you are using
 # Example for Gunicorn:
-#exec gunicorn settings.wsgi:application --bind 0.0.0.0:8000
+RUN gunicorn settings.wsgi:application --bind 0.0.0.0:8000
 
 # If you're using Django's development server, you can start it like this:
-exec python manage.py runserver 0.0.0.0:8000
+#RUN python manage.py runserver 0.0.0.0:8000
