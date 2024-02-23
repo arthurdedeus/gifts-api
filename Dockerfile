@@ -13,10 +13,19 @@ COPY pyproject.toml poetry.lock* /code/
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
-COPY entrypoint.sh /code/entrypoint.sh
+ECHO "Collecting static files..."
+RUN python manage.py collectstatic --no-input
 
-RUN chmod +x /code/entrypoint.sh
+ECHO "Applying database migrations..."
+RUN python manage.py migrate
 
-COPY . /code/
+ECHO "Starting up server"
+RUN python manage.py runserver 0.0.0.0:8000
 
-ENTRYPOINT ["/code/entrypoint.sh"]
+#COPY entrypoint.sh /code/entrypoint.sh
+#
+#RUN chmod +x /code/entrypoint.sh
+#
+#COPY . /code/
+#
+#ENTRYPOINT ["/code/entrypoint.sh"]
