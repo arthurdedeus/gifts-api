@@ -32,12 +32,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY", default="unsafe-default-key")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,22 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "settings.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME", default="gifts-api-db"),
-        "USER": env("DB_USER", default="gifts-api"),
-        "PASSWORD": env("DB_PASSWORD", default="badaras"),
-        "HOST": env("DB_HOST", default="localhost"),
-        "PORT": env("DB_PORT", default=5432),
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -146,3 +124,31 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
+
+# Database
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DB_NAME", default="gifts-api-db"),
+        "USER": env("DB_USER", default="gifts-api"),
+        "PASSWORD": env("DB_PASSWORD", default="badaras"),
+        "HOST": env("DB_HOST", default="localhost"),
+        "PORT": env("DB_PORT", default=5432),
+    }
+}
+
+# Env Specific
+
+# SECURITY WARNING: don't run with debug turned on in production!
+ENV = env("ENV", default="development")
+DEBUG = ENV == "development"
+
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+        "*",
+    ]

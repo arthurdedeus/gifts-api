@@ -13,4 +13,10 @@ COPY pyproject.toml poetry.lock* /code/
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
+COPY entrypoint.sh /code/entrypoint.sh
+
+RUN chmod +x /code/entrypoint.sh
+
 COPY . /code/
+
+ENTRYPOINT ["/code/entrypoint.sh"]
