@@ -20,11 +20,3 @@ EXPOSE 8000
 CMD python manage.py collectstatic --no-input \
 && python manage.py migrate \
 && gunicorn settings.wsgi
-
-
-#COPY entrypoint.sh /code/entrypoint.sh
-#
-#RUN chmod +x /code/entrypoint.sh
-#
-#
-#ENTRYPOINT ["/code/entrypoint.sh"]

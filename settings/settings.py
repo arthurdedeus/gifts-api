@@ -147,6 +147,8 @@ DEBUG = ENV == "development"
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 else:
+    CSRF_TRUSTED_ORIGINS = ["https://gifts-api-production.up.railway.app"]
+
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
