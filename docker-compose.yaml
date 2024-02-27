@@ -6,11 +6,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - DB_NAME=gifts-api-db
-      - DB_USER=gifts-api
-      - DB_PASSWORD=badaras
-      - DB_HOST=db
-      - DB_PORT=5432
+      - POSTGRES_DB=gifts-api-db
+      - POSTGRES_USER=gifts-api
+      - POSTGRES_PASSWORD=badaras
       - PGDATA=/var/lib/postgresql/data/pgdata/
     ports:
       - "5432:5432"
