@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import os
 from pathlib import Path
 
 import environ
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "storages",
     "gifts",
 ]
 
@@ -129,10 +129,26 @@ DATABASES = {
     }
 }
 
+# Storage
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+MINIO_ACCESS_KEY = env("MINIO_ACCESS_KEY", default="gifts-api-access")
+MINIO_SECRET_KEY = env("MINIO_SECRET_KEY", default="minio123")
+MINIO_ENDPOINT = env("MINIO_ENDPOINT", default="http://localhost:9000")
+MINIO_USE_HTTPS = False
+MINIO_MEDIA_BUCKET_NAME = env("MINIO_MEDIA_BUCKET_NAME", default="media")
+MINIO_AUTO_CREATE_MEDIA_BUCKET = True
+
+AWS_ACCESS_KEY_ID = MINIO_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY = MINIO_SECRET_KEY
+AWS_STORAGE_BUCKET_NAME = MINIO_MEDIA_BUCKET_NAME
+AWS_S3_ENDPOINT_URL = MINIO_ENDPOINT
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = True
+AWS_S3_FILE_OVERWRITE = False
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Env Specific
 
