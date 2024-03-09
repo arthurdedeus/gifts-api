@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "storages",
     "gifts",
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -157,11 +159,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # SECURITY WARNING: don't run with debug turned on in production!
 ENV = env("ENV", default="development")
 DEBUG = ENV == "development"
-
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
+    CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 else:
     CSRF_TRUSTED_ORIGINS = ["https://gifts-api-production.up.railway.app"]
+    CORS_ALLOWED_ORIGINS = ["https://carthur.netlify.app"]
     ALLOWED_HOSTS = [
         "localhost",
         "127.0.0.1",
