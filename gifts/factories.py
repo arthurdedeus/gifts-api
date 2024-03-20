@@ -2,7 +2,7 @@ import factory
 from factory import LazyAttribute
 from faker import Faker
 
-from gifts.models import Gift
+from gifts.models.gift import Gift
 
 faker = Faker()
 

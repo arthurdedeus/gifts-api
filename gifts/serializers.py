@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from gifts.models import Gift
+from gifts.models.gift import Gift
 
 
 class GiftSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from gifts.models import Gift
+from gifts.models.gift import Gift
 
 
 # Register your models here.
