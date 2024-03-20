@@ -26,6 +26,7 @@ class CheckoutFactory(factory.django.DjangoModelFactory):
         model = Checkout
 
     user = factory.SubFactory(UserFactory)
+    message = LazyAttribute(lambda _: faker.text())
     qr_code = LazyAttribute(lambda _: faker.image_url())
 
 

@@ -6,6 +6,11 @@ from base_model import BaseModel
 
 class Checkout(BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.TextField(
+        help_text="Message written by the gifter",
+        blank=True,
+        null=True,
+    )
     qr_code = models.ImageField(
         upload_to="purchases/qr_codes/",
         help_text="QR Code for Pix payment",
