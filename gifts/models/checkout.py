@@ -19,3 +19,7 @@ class Checkout(BaseModel):
     @property
     def total(self):
         return self.checkout_items.aggregate(total=models.Sum("total"))["total"]
+
+    def generate_qr_code(self):
+        # TODO: Implement QR Code generation
+        pass
