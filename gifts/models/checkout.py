@@ -1,7 +1,11 @@
+from io import BytesIO
+
 from django.conf import settings
+from django.core.files import File
 from django.db import models
 
 from base_model import BaseModel
+from gifts.services.pix import PixService
 
 
 class Checkout(BaseModel):
@@ -21,5 +25,9 @@ class Checkout(BaseModel):
         return self.checkout_items.aggregate(total=models.Sum("total"))["total"]
 
     def generate_qr_code(self):
-        # TODO: Implement QR Code generation
-        pass
+        pix_service = PixService()
+        qr_code = pix_service.create_qr_code(amount=self.total)
+        if qr_code:
+            blob = BytesIO()
+            qr_code.save(blob, format="PNG")
+            self.qr_code.save(f"qr_code_{self.id}.png", File(blob))

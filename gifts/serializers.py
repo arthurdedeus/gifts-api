@@ -42,5 +42,5 @@ class CheckoutSerializer(serializers.ModelSerializer):
             gift = Gift.objects.get(id=item["gift_id"])
             total = gift.price * item["quantity"]
             checkout.checkout_items.create(
-                gift_id=gift, quantity=item["quantity"], total=total
+                gift=gift, quantity=item["quantity"], total=total
             )
