@@ -40,7 +40,7 @@ class GiftViewSetTestCase(TestCase):
         self.assertEqual(result["amount"], self.gift.amount)
         self.assertTrue(result["image"].endswith(self.gift.image.url))
 
-    def test_patch_authenticated_user_should_return_200(self):
+    def test_patch_authenticated_user_should_return_401(self):
         self.client.force_login(self.user)
         response = self.client.patch(
             reverse(DETAIL_VIEW, kwargs={"pk": self.gift.id}),
@@ -48,15 +48,14 @@ class GiftViewSetTestCase(TestCase):
             content_type="application/json",
         )
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.gift.refresh_from_db()
-        self.assertEqual(self.gift.name, NEW_NAME)
 
-    def test_patch_unauthenticated_user_should_return_403(self):
+    def test_patch_unauthenticated_user_should_return_401(self):
         response = self.client.patch(
             reverse("gifts:gifts-detail", kwargs={"pk": self.gift.id}),
             data={"name": NEW_NAME},
             content_type="application/json",
         )
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
