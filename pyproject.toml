@@ -56,7 +56,7 @@ pypix = {git = "https://github.com/cleitonleonel/pypix.git"}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
-ruff = "0.2.2"
+ruff = "0.3.7"
 
 [tool.ruff]
 exclude = [
