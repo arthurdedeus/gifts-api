@@ -15,11 +15,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        user, _ = User.objects.get_or_create(
-            username=validated_data.get("email"),
-            email=validated_data.get("email"),
-            first_name=validated_data.get("first_name"),
-        )
+        try:
+            user = User.objects.get(username=validated_data.get("email"))
+        except User.DoesNotExist:
+            user = User.objects.create_user(
+                username=validated_data.get("email"),
+                email=validated_data.get("email"),
+                first_name=validated_data.get("first_name"),
+                last_name=validated_data.get("last_name"),
+            )
         if not hasattr(user, "auth_token"):
             Token.objects.get_or_create(user=user)
         return user

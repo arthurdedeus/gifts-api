@@ -19,6 +19,10 @@ class Checkout(BaseModel):
         upload_to="purchases/qr_codes/",
         help_text="QR Code for Pix payment",
     )
+    br_code = models.CharField(
+        max_length=1024,
+        help_text="BR Code for Pix payment",
+    )
 
     @property
     def total(self):
@@ -30,4 +34,5 @@ class Checkout(BaseModel):
         if qr_code:
             blob = BytesIO()
             qr_code.save(blob, format="PNG")
+            self.br_code = pix_service.get_br_code()
             self.qr_code.save(f"qr_code_{self.id}.png", File(blob))

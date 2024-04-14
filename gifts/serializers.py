@@ -19,11 +19,12 @@ class CheckoutItemInputSerializer(serializers.Serializer):
 class CheckoutSerializer(serializers.ModelSerializer):
     message = serializers.CharField(write_only=True, required=False)
     items = CheckoutItemInputSerializer(many=True, write_only=True)
-    qr_code = serializers.CharField(read_only=True)
+    qr_code = serializers.ImageField(read_only=True)
+    br_code = serializers.CharField(read_only=True)
 
     class Meta:
         model = Checkout
-        fields = ("message", "items", "qr_code")
+        fields = ("message", "items", "qr_code", "br_code")
 
     @transaction.atomic
     def create(self, validated_data):
