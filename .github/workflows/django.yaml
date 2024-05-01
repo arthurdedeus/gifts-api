@@ -27,7 +27,7 @@ jobs:
         pip install poetry==1.7.0
         poetry install
     - name: Spin up DB
-      run: docker-compose up -d
+      run: docker-compose run --publish 5432:5432 db
     - name: Check DB
       run: |
         wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz && rm dockerize-linux-amd64-v0.6.1.tar.gz
