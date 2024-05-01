@@ -30,6 +30,38 @@ services:
     volumes:
       - minio_data:/data
 
+  api:
+    command: ["poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app/
+      - ./.tmp/static/:/tmp/static
+      - ./.tmp/media/:/tmp/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - minio 
+    env_file:
+      - .env
+
+  api-prod:
+    command: ["poetry", "run", "gunicorn", "-b", "0.0.0.0:8000", "settings.wsgi"]
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app/
+      - ./.tmp/static/:/tmp/static
+      - ./.tmp/media/:/tmp/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - minio 
+    env_file:
+      - .env.prod
+
 volumes:
   postgres_data:
   minio_data:
