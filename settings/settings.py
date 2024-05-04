@@ -161,13 +161,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # Env Specific
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ENV = env("ENV", default="development")
+ENV = env("ENV", default="prod")
 DEBUG = ENV == "development"
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
     CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 else:
-    CSRF_TRUSTED_ORIGINS = ["https://gifts-api-production.up.railway.app"]
+    CSRF_TRUSTED_ORIGINS = ["https://gifts.artu.site"]
     CORS_ALLOWED_ORIGINS = ["https://carthur.netlify.app"]
     ALLOWED_HOSTS = [
         "localhost",
