@@ -26,7 +26,7 @@ class GiftViewSetTestCase(TestCase):
         self.assertEqual(result["description"], self.gift.description)
         self.assertTrue(result["price"], self.gift.price)
         self.assertEqual(result["amount"], self.gift.amount)
-        self.assertTrue(result["image"].endswith(self.gift.image.url))
+        self.assertTrue(result["image"].endswith(self.gift.image.name))
 
     def test_retrieve(self):
         response = self.client.get(reverse(DETAIL_VIEW, kwargs={"pk": self.gift.id}))
@@ -38,7 +38,7 @@ class GiftViewSetTestCase(TestCase):
         self.assertEqual(result["description"], self.gift.description)
         self.assertTrue(result["price"], self.gift.price)
         self.assertEqual(result["amount"], self.gift.amount)
-        self.assertTrue(result["image"].endswith(self.gift.image.url))
+        self.assertTrue(result["image"].endswith(self.gift.image.name))
 
     def test_patch_authenticated_user_should_return_401(self):
         self.client.force_login(self.user)

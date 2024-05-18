@@ -1,14 +1,27 @@
+from urllib.parse import urljoin
+
 from django.db import transaction
 from rest_framework import serializers
 
 from gifts.models.checkout import Checkout
 from gifts.models.gift import Gift
+from settings import settings
 
 
 class GiftSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = Gift
         fields = ("id", "name", "description", "price", "amount", "image")
+
+    @staticmethod
+    def get_image(obj):
+        bucket_url = urljoin(
+            settings.MINIO_PUBLIC_ENDPOINT,
+            settings.MINIO_MEDIA_BUCKET_NAME,
+        )
+        return bucket_url + "/" + obj.image.name
 
 
 class CheckoutItemInputSerializer(serializers.Serializer):
@@ -19,12 +32,20 @@ class CheckoutItemInputSerializer(serializers.Serializer):
 class CheckoutSerializer(serializers.ModelSerializer):
     message = serializers.CharField(write_only=True, required=False)
     items = CheckoutItemInputSerializer(many=True, write_only=True)
-    qr_code = serializers.ImageField(read_only=True)
+    qr_code = serializers.SerializerMethodField(read_only=True)
     br_code = serializers.CharField(read_only=True)
 
     class Meta:
         model = Checkout
         fields = ("message", "items", "qr_code", "br_code")
+
+    @staticmethod
+    def get_qr_code(obj):
+        bucket_url = urljoin(
+            settings.MINIO_PUBLIC_ENDPOINT,
+            settings.MINIO_MEDIA_BUCKET_NAME,
+        )
+        return bucket_url + "/" + obj.qr_code.name
 
     @transaction.atomic
     def create(self, validated_data):
