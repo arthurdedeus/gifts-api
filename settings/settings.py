@@ -140,7 +140,8 @@ DATABASES = {
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 MINIO_ACCESS_KEY = env("MINIO_ACCESS_KEY", default="gifts-api-access")
 MINIO_SECRET_KEY = env("MINIO_SECRET_KEY", default="minio123")
-MINIO_ENDPOINT = env("MINIO_ENDPOINT", default="http://localhost:9000")
+MINIO_ENDPOINT = env("MINIO_ENDPOINT", default="http://minio:9000")
+MINIO_PUBLIC_ENDPOINT = env("MINIO_PUBLIC_ENDPOINT", default="http://localhost:9000")
 MINIO_USE_HTTPS = False
 MINIO_MEDIA_BUCKET_NAME = env("MINIO_MEDIA_BUCKET_NAME", default="media")
 MINIO_AUTO_CREATE_MEDIA_BUCKET = True
