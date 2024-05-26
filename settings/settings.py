@@ -19,7 +19,6 @@ try:
     environ.Env.read_env(env_file=".env")
 except FileNotFoundError:
     print("Did not find .env file")
-    pass
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -119,7 +118,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_PAGINATION_CLASS": "pagination.CustomPageNumberPagination",
     "PAGE_SIZE": 10,
 }
 
