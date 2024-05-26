@@ -26,4 +26,6 @@ jobs:
           context: .
           push: true
           # Uses the tag name for the Docker image tag
-          tags: arthurdedeus/gifts-api:${{ github.ref_name }}
+          tags: |
+            arthurdedeus/gifts-api:${{ github.ref_name }}
+            arthurdedeus/gifts-api:latest
