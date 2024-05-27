@@ -1,0 +1,59 @@
+version: '3.12'
+
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=gifts-api-db
+      - POSTGRES_USER=gifts-api
+      - POSTGRES_PASSWORD=badaras
+      - PGDATA=/var/lib/postgresql/data/pgdata/
+    ports:
+      - "5432:5432"
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - minio_data:/data
+
+  api:
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app/
+      - ./.tmp/static/:/tmp/static
+      - ./.tmp/media/:/tmp/media
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - minio
+    environment:
+      - DB_NAME=gifts-api-db
+      - DB_HOST=db
+      - DB_PASSWORD=badaras
+      - DB_PORT=5432
+      - DB_USER=gifts-api
+      - ENV=development
+      - PIX_NAME_RECEIVER=Adriano Imperador
+      - PIX_CITY_RECEIVER=Rio de Janeiro
+      - PIX_KEY=99125003
+
+volumes:
+  postgres_data:
+  minio_data:
