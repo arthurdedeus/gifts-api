@@ -12,7 +12,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Ensures you fetch all history for all tags and branches
+          fetch-depth: 0  # Ensure fetching all history for all tags and branches
+
+      - name: Set up Dockerx
+        uses: docker/setup-buildx-action@v2
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -25,7 +28,7 @@ jobs:
         with:
           context: .
           push: true
-          # Uses the tag name for the Docker image tag
+          platforms: linux/amd64,linux/arm64/v8
           tags: |
             arthurdedeus/gifts-api:${{ github.ref_name }}
             arthurdedeus/gifts-api:latest
