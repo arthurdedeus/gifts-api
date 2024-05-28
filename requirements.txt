@@ -21,7 +21,7 @@ pexpect==4.9.0
 pkginfo==1.9.6
 platformdirs==3.11.0
 ptyprocess==0.7.0
-pycparser==2.21
+pycparser==2.22
 pyproject_hooks==1.0.0
 pytz==2024.1
 rapidfuzz==3.6.1
