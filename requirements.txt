@@ -1,4 +1,4 @@
-asgiref==3.7.2
+asgiref==3.8.1
 build==1.2.1
 CacheControl==0.13.1
 certifi==2024.2.2
