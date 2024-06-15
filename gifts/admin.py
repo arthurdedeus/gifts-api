@@ -11,6 +11,17 @@ class GiftAdmin(admin.ModelAdmin):
     search_fields = ("name",)
 
 
+@admin.register(CheckoutItem)
+class CheckoutItemAdmin(admin.ModelAdmin):
+    list_display = ("gift", "quantity", "total")
+    search_fields = ("gift",)
+
+
+class CheckoutItemInline(admin.TabularInline):
+    model = CheckoutItem
+    extra = 0
+
+
 @admin.register(Checkout)
 class CheckoutAdmin(admin.ModelAdmin):
     list_display = ("user", "total")
@@ -19,9 +30,4 @@ class CheckoutAdmin(admin.ModelAdmin):
         "user__username",
     )
     readonly_fields = ("total",)
-
-
-@admin.register(CheckoutItem)
-class CheckoutItemAdmin(admin.ModelAdmin):
-    list_display = ("gift", "quantity", "total")
-    search_fields = ("gift",)
+    inlines = (CheckoutItemInline,)
